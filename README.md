@@ -1,6 +1,6 @@
 ### my ass is not going to deal with input lags in pygame thanks for watching
 # pybmson
-![alt text]([image-1.png](https://bluestar.s-ul.eu/o8B0fnsQ))
+![alt text](https://bluestar.s-ul.eu/o8B0fnsQ)
 lazy ass dev tryna making something cool in python
 
 ---
