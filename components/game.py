@@ -52,8 +52,8 @@ def rendergame(screen, time):
 			else:
 				column = 1
 			starttime = note['time']
-			NOTE = pygame.image.load(f'./{switch2[note["lane"]]}.png').convert()
-			NOTE = pygame.transform.scale(NOTE, (NOTE_WIDTH, NOTE_HEIGHT))
+			# NOTE = pygame.image.load(f'./{switch2[note["lane"]]}.png').convert()
+			# NOTE = pygame.transform.scale(NOTE, (NOTE_WIDTH, NOTE_HEIGHT))
 			y = interpolate(time, starttime-SPEED, starttime, 0, (HEIGHT-JUDGEMENTY_DIFF))- NOTE_HEIGHT*2
 			# print(y, time)
 			if (time > note['time'] + 400 and note['hit'] == -1):
