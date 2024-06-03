@@ -167,13 +167,6 @@ renderedaudio = 0
 # 		print('loaded : ', len(objlist), ' out of ', targetobjlength)
 # 	playing = targetobjlength == renderedaudio
 
-while not playing:
-	# print(len(objlist))
-	if (renderedaudio != len(audio_segments)):
-		renderedaudio = len(audio_segments)
-		print('loaded : ', len(objlist), ' out of ', len(bmsfile['sound_channels']))
-	playing = bmsfile['sound_channels'] == renderedaudio
-
 pygame.time.wait(1000)
 for segment in audio_segments:
 	segment['sound'].play()

@@ -5,7 +5,7 @@ def interpolate(input, inputMin, inputMax, outputMin, outputMax):
 	return ((input - inputMin) / (inputMax - inputMin)) * (outputMax - outputMin) + outputMin
 
 def visiblefunc(a, time):
-	return int(a['time'])-SPEED <= time and int(a['time']) + 1000 >= time and a['hit'] == -1
+	return int(a['time'])-SPEED <= time and int(a['time'])+500 >= time
 
 
 WIDTH =	float(config[3])
@@ -15,14 +15,14 @@ NOTE_HEIGHT = int(HEIGHT * float(config[0]))
 JUDGEMENTY_DIFF = int(HEIGHT * float(config[2]))
 SPEED = int(float(config[5]))
 switch = {
-	'1': 0,
-	'2': 0,
-	'3': 0,
-	'4': 0,
-	'5': 0,
-	'6': 0,
-	'7': 0,
-	'8': 0,
+	1: 1,
+	2: 0.9,
+	3: 1,
+	4: 0.9,
+	5: 1,
+	6: 0.9,
+	7: 1,
+	8: 1.2,
 }
 switch2 = {
 	1: 'white',
@@ -36,15 +36,14 @@ switch2 = {
 }
 
 
-
 def rendergame(screen, time):
 	visibleobjects = filter(lambda obj: visiblefunc(obj, time), GameState.objlist)
-	visiblelines = filter(lambda obj: visiblefunc(obj, time), GameState.linelist)
-	for line in visiblelines:
-		starttime = line['time']
-		y = interpolate(time, starttime-SPEED, starttime, 0, (HEIGHT-JUDGEMENTY_DIFF))- NOTE_HEIGHT
-		rect = pygame.Rect(0, y, NOTE_WIDTH*8, 2)
-		pygame.draw.rect(screen, 'white', rect)
+	# visiblelines = filter(lambda obj: visiblefunc(obj, time), GameState.linelist)
+	# for line in visiblelines:
+	# 	starttime = line['time']
+	# 	y = interpolate(time, starttime-SPEED, starttime, 0, (HEIGHT-JUDGEMENTY_DIFF))- NOTE_HEIGHT
+	# 	rect = pygame.Rect(0, y, NOTE_WIDTH*8, 2)
+	# 	pygame.draw.rect(screen, 'white', rect)
 	for note in visibleobjects:
 		if (note['lane'] != 0):
 			column = note['lane']
@@ -53,9 +52,11 @@ def rendergame(screen, time):
 			else:
 				column = 1
 			starttime = note['time']
+			NOTE = pygame.image.load(f'./{switch2[note["lane"]]}.png').convert()
+			NOTE = pygame.transform.scale(NOTE, (NOTE_WIDTH, NOTE_HEIGHT))
 			y = interpolate(time, starttime-SPEED, starttime, 0, (HEIGHT-JUDGEMENTY_DIFF))- NOTE_HEIGHT*2
 			# print(y, time)
-			if (time > note['time'] + 400):
+			if (time > note['time'] + 400 and note['hit'] == -1):
 				GameState.judge = 'miss'
 				note['hit'] == time
 				GameState.combo = 0
@@ -65,5 +66,6 @@ def rendergame(screen, time):
 						segment['sound'].set_volume(0)
 			x = 0 + (column - 1) * NOTE_WIDTH
 			rect = pygame.Rect(x, y, NOTE_WIDTH, NOTE_HEIGHT)
+			# screen.blit(NOTE, (x, y))
 			
 			pygame.draw.rect(screen, switch2[note['lane']], rect)
